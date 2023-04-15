@@ -63,7 +63,6 @@ def getRepo(since=None, lang=None):
         dic = {}
         dic['ranking'] = i = i + 1;
         repo = article.find('h2', {'class': 'lh-condensed'})
-        print(repo)
         if not repo is None:
             repo_a = repo.a
             if not repo_a is None:
