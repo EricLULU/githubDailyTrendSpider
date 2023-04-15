@@ -42,16 +42,14 @@ def get_content(url):
             today_star = li_list[i].find('span', {'class': 'd-inline-block float-sm-right'}).text.strip().split(' ')[0].replace(',', '')
         except:
             today_star = 0
-        # print('排名:{}\t作者:{}\t项目名:{}\n链接:{}\n简介:{}\n语言:{}\t总star:{}\t今日新增star:{}\n\n'.format(
-        #     i + 1,developer,project_name,url,description,language,total_star,today_star
-        # ))
+
         data = {'ranking': i + 1, 'author': developer, 'project_name': project_name, 'url': url,
                 'description': description, 'language': language, 'total_star': total_star, 'today_star': today_star}
         yield data
 
 def getRepo(since=None, lang=None):
     url = 'https://github.com/trending'
-    url_prefix = 'https://github.com/'
+    url_prefix = 'https://github.com'
     if not lang is None:
         url = url + '/' + lang
     if not since is None:
@@ -64,11 +62,12 @@ def getRepo(since=None, lang=None):
     for article in articles:
         dic = {}
         dic['ranking'] = i = i + 1;
-        repo = article.find('h1', {'class': 'lh-condensed'})
+        repo = article.find('h2', {'class': 'lh-condensed'})
+        print(repo)
         if not repo is None:
             repo_a = repo.a
             if not repo_a is None:
-                repo_text = replaces(repo_a.text)
+                repo_text = replaces(repo_a.get('href'))
                 dic['repo'] = repo_text
         dic['url'] = url_prefix + repo_text
         description = article.find('p', {'class': 'col-9'})
@@ -138,10 +137,7 @@ def save_to_db(data):
 
 if __name__ == '__main__':
     db = db_connect()
-    # for data in get_content('https://github.com/trending'):
-    #     if db:
-    #         save_to_db(data)
-    # db_close(db)
+
     for data in getRepo():
         if db:
             save_to_db(data)
