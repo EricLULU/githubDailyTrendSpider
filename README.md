@@ -1,16 +1,17 @@
-# githubDailyTrendSpider
-github daily trend 爬虫
+![badge](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 
-爬取Github 每日热搜榜，将抓取的数据自动存储到数据库，因此需要配置数据库连接的相关信息，
+Github 每日热搜榜爬虫使用python 编写，将抓取的数据自动存储到mysql数据库中。
 
-1.需要在在下面配置数据库连接用户名和密码
+![badge](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white)
+
+# 配置数据库连接用户名和密码
 def db_connect():
     try:
         db = pymysql.connect(host='localhost', port=3306, user='数据库用户名', password='数据库密码', database='gitTrend_db',
                              charset='utf8')
                              
 
-2.创建数据库和数据表
+# 创建数据库和数据表
 
 数据库名字：gitTrend_db
 
@@ -48,6 +49,6 @@ CREATE TABLE IF NOT EXISTS `github_trending_day` (
 
 ![badge](https://img.shields.io/badge/WeChat-07C160?style=for-the-badge&logo=wechat&logoColor=white)
 
-使用上有问题，可扫下面的二维码与我联系
+# 使用上有问题，可扫下面的二维码与我联系
 
 ![image](https://github.com/EricLULU/githubDailyTrendSpider/blob/main/img/wechat.jpg)
