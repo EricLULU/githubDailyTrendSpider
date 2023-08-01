@@ -46,4 +46,5 @@ CREATE TABLE IF NOT EXISTS `github_trending_day` (
 
 
 使用上如有问题，可扫码与我联系
+
 ![image](https://github.com/EricLULU/githubDailyTrendSpider/blob/main/img/wechat.jpg)
