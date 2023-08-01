@@ -43,3 +43,7 @@ CREATE TABLE IF NOT EXISTS `github_trending_day` (
   PRIMARY KEY (`id`)
   
 ) ENGINE=InnoDB AUTO_INCREMENT=173 DEFAULT CHARSET=utf8mb3;
+
+
+使用上如有问题，可扫码与我联系
+![image](https://github.com/EricLULU/githubDailyTrendSpider/blob/main/img/wechat.jpg)
