@@ -48,4 +48,6 @@ CREATE TABLE IF NOT EXISTS `github_trending_day` (
 
 ![badge](https://img.shields.io/badge/WeChat-07C160?style=for-the-badge&logo=wechat&logoColor=white)
 
+使用上有问题，可扫下面的二维码与我联系
+
 ![image](https://github.com/EricLULU/githubDailyTrendSpider/blob/main/img/wechat.jpg)
