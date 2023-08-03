@@ -13,7 +13,7 @@ def replaces(str):
 
 def get_html(url):
     try:
-        r = requests.get(url)
+        r = requests.get(url, verify=False)
         r.raise_for_status()
         return r.text
     except Exception as e:
@@ -86,7 +86,7 @@ def getRepo(since=None, lang=None):
         # if not lang_color is None:
         #     dic['lang_color'] = lang_color.attrs['style'][-6:]
 
-        fork_starts = article.find_all('a', {'class': 'Link--muted d-inline-block mr-3'})
+        fork_starts = article.find_all('a', {'class': 'Link Link--muted d-inline-block mr-3'})
         if not fork_starts is None:
             dic['stars'] = fork_starts[0].text.strip()
             dic['forks'] = fork_starts[1].text.strip()
