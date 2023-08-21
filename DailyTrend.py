@@ -6,7 +6,29 @@ import emoji
 import re
 
 import ssl
+import random
+import json
+from hashlib import md5
+
+# Set your own appid/appkey.
+appid = '20230806001771102'
+appkey = 'JOR3Ss0S4FS5Fkp2yF0T'
+
+# For list of language codes, please refer to `https://api.fanyi.baidu.com/doc/21`
+from_lang = 'auto'
+to_lang = 'zh'
+
+endpoint = 'http://api.fanyi.baidu.com'
+path = '/api/trans/vip/translate'
+baidu_trans_url = endpoint + path
+
 ssl._create_default_https_context = ssl._create_unverified_context
+
+query = '你好'
+
+# Generate salt and sign
+def make_md5(s, encoding='utf-8'):
+    return md5(s.encode(encoding)).hexdigest()
 
 def replaces(str):
     return str.replace('\n', '').replace('\r', '').replace(' ', '')
@@ -73,8 +95,15 @@ def getRepo(since=None, lang=None):
         if not description is None:
             dic['description'] = re.sub(':\S+?:', ' ', emoji.demojize(description.text.strip()))
             print("description %s", re.sub(':\S+?:', ' ', emoji.demojize(description.text.strip())))
+            sign = make_md5(appid + dic['description'] + str(salt) + appkey)
+            payload = {'appid': appid, 'q': dic['description'], 'from': from_lang, 'to': to_lang, 'salt': salt, 'sign': sign}
+            # Send request
+            r = requests.post(baidu_trans_url, params=payload, headers=headers)
+            result = r.json()
+            dic['description_zh'] = result.get('trans_result')[0].get('dst')
         else:
             dic['description'] = ""
+            dic['description_zh'] = ""
 
         lang = article.find('span', {'itemprop': 'programmingLanguage'})
         if not lang is None:
@@ -127,12 +156,17 @@ def save_to_db(data):
         with db.cursor() as cursor:
             sql = 'insert into github_trending_day(ranking,repo,url,description,lang,stars,forks,added_stars, time)' \
                   'values(%s,%s,%s,%s,%s,%s,%s,%s, now())'
+                  'values(%s,%s,%s,%s,%s,%s,%s,%s,%s, now())'
             cursor.execute(sql, (data['ranking'], data['repo'],  data['url'],   data['description'],
                                  data['lang'],    data['stars'], data['forks'], data['added_stars']))
+                                 data['added_stars']))
             db.commit()
             print('insert to db success\t', str(datetime.datetime.now()))
     except Exception as e:
         print('insert to db fail,e:{}\t{}'.format(str(e), str(datetime.datetime.now())))
+
+# Build request
+headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 
 if __name__ == '__main__':
     db = db_connect()
