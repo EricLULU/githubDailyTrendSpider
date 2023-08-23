@@ -11,8 +11,8 @@ import json
 from hashlib import md5
 
 # Set your own appid/appkey.
-appid = '20230806001771102'
-appkey = 'JOR3Ss0S4FS5Fkp2yF0T'
+appid = '百度翻译APPID'
+appkey = '百度翻译APPLEY'
 
 # For list of language codes, please refer to `https://api.fanyi.baidu.com/doc/21`
 from_lang = 'auto'
